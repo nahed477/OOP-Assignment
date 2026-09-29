@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 // 1. Farah Amr Gaber Elsayed  
 //    ID:20250466       Filters:Grayscale & Flip Filters
 //2. Maya Hossam Abdelaziz Mahmoud 
@@ -15,6 +16,11 @@
 
 using namespace std;
 
+=======
+#include<iostream>
+#include"Image_Class.h"
+using namespace std;
+>>>>>>> 0d030f3c105664e62ec68af6ea6b3df0ce32bdbf
 void menu(){
     cout<<"Please Enter a Filter Number :"<<endl;
     cout<<"1.Grayscale"<<endl;
@@ -25,7 +31,10 @@ void menu(){
     cout<<"6.Rotate"<<endl;
     cout<<"7.Brightness"<<endl;
     cout<<"8.Resize"<<endl;
+<<<<<<< HEAD
     cout<<"Enter 0 to Exit "<<endl;
+=======
+>>>>>>> 0d030f3c105664e62ec68af6ea6b3df0ce32bdbf
     cout<<"___________________________________________________________"<<endl;
 }
 void grayscale(Image &photo){
@@ -155,6 +164,7 @@ void frame(Image &photo)
     }
 }
 
+<<<<<<< HEAD
 void light(Image &photo,int percentage){
     for (int i=0;i<photo.width;++i){
         for(int j=0;j<photo.height;++j){
@@ -165,12 +175,24 @@ void light(Image &photo,int percentage){
                 }
                 else{
                     photo(i,j,k)= value + percentage;
+=======
+void light(Image &photo,int precentage){
+    for (int i=0;i<photo.width;++i){
+        for(int j=0;j<photo.height;++j){
+            for(int k=0;k<photo.channels;++k){
+                if(photo(i,j,k)+precentage >255){
+                    photo(i,j,k)=255;
+                }
+                else{
+                    photo(i,j,k)+=precentage;
+>>>>>>> 0d030f3c105664e62ec68af6ea6b3df0ce32bdbf
                 }
             }
         }
     }
 }
 
+<<<<<<< HEAD
 void dark(Image &photo,int percentage){
     for (int i=0;i<photo.width;++i){
         for(int j=0;j<photo.height;++j){
@@ -182,6 +204,17 @@ void dark(Image &photo,int percentage){
                 }
                 else{
                     photo(i,j,k)=value1 - percentage;
+=======
+void dark(Image &photo,int precentage){
+    for (int i=0;i<photo.width;++i){
+        for(int j=0;j<photo.height;++j){
+            for(int k=0;k<photo.channels;++k){
+                if(photo(i,j,k)-precentage <0){
+                    photo(i,j,k)=0;
+                }
+                else{
+                    photo(i,j,k)-=precentage;
+>>>>>>> 0d030f3c105664e62ec68af6ea6b3df0ce32bdbf
                 }
             }
         }
@@ -294,6 +327,7 @@ void resize(Image &photo)
 }
 
 int main(){
+<<<<<<< HEAD
      cout<<"Please Enter File Name With Extention : "<<endl; 
     string fileName;
     cin>>fileName;
@@ -312,10 +346,21 @@ int main(){
         cout<<"Exited Program ";
         break;   
     }
+=======
+    menu();
+    int number;
+    cin>>number;
+    cout<<"Please Enter File Name With Extention : "<<endl; 
+    string fileName;
+    cin>>fileName;
+    Image photo (fileName);
+    
+>>>>>>> 0d030f3c105664e62ec68af6ea6b3df0ce32bdbf
     if(1 <= number && number <= 8){
         switch (number){
             case 1:
                 grayscale(photo);
+<<<<<<< HEAD
             break;
             case 2:  
                 blackandwhite_filter(photo);
@@ -332,6 +377,24 @@ int main(){
             case 5:
                 {
                     int flip_filter;
+=======
+                photo.saveImage(fileName);
+            break;
+            case 2:  
+                blackandwhite_filter(photo);
+                photo.saveImage(fileName);
+            break;
+            case 3:
+                invert(photo);
+                photo.saveImage(fileName);
+            break;
+            case 4:
+                frame(photo);
+                photo.saveImage(fileName);
+            break;
+            case 5:
+                int flip_filter;
+>>>>>>> 0d030f3c105664e62ec68af6ea6b3df0ce32bdbf
                 cout<<"Enter 1 for vertical flip And 0 for horizontal flip"<<endl;
                 cin>> flip_filter;
                 while(flip_filter != 0 && flip_filter != 1){
@@ -340,16 +403,25 @@ int main(){
                 }
                 if(flip_filter == 0){
                     horizontal(photo);
+<<<<<<< HEAD
                     
                 }
                 else if(flip_filter == 1){
                     vertical(photo);
                     
                 }
+=======
+                    photo.saveImage(fileName);
+                }
+                else if(flip_filter == 1){
+                    vertical(photo);
+                    photo.saveImage(fileName);
+>>>>>>> 0d030f3c105664e62ec68af6ea6b3df0ce32bdbf
                 }
 
             break;
             case 6: 
+<<<<<<< HEAD
                {
                  int angle;
                 cout<<"Enter The Angle of The Rotation "<<endl;
@@ -361,6 +433,16 @@ int main(){
             case 7:
                {
                  int filter,percentage;
+=======
+                int angle;
+                cout<<"enter the angle of rotation"<<endl;
+                cin>>angle;
+                rotate_filter(photo, angle);
+                photo.saveImage(fileName);
+            break;
+            case 7:
+                int filter,precentage;
+>>>>>>> 0d030f3c105664e62ec68af6ea6b3df0ce32bdbf
                 cout<<"Enter 1 for Darken And 0 For lighten"<<endl;
                 cin>>filter;
                 while(filter !=0 && filter != 1){
@@ -368,6 +450,7 @@ int main(){
                     cin>>filter;
                 }
                 cout<<"Enter Percentage: "<<endl;
+<<<<<<< HEAD
                 cin>>percentage;
                 if(percentage <0 || percentage>255){
                     cout<<"Precentage Not Valid ,Please Enter Valid Percentage :"<<endl;
@@ -400,3 +483,25 @@ int main(){
    }while(number != 0);
 
 }
+=======
+                cin>>precentage;
+                if(filter==0){
+                    light(photo,precentage);
+                    photo.saveImage(fileName);
+                }
+                else if(filter==1){
+                    dark(photo,precentage);
+                    photo.saveImage(fileName);
+                }
+            break;
+            case 8:
+                resize(photo);
+                photo.saveImage(fileName);
+            break;
+        }
+    }
+    else{
+        menu();
+    }
+}
+>>>>>>> 0d030f3c105664e62ec68af6ea6b3df0ce32bdbf

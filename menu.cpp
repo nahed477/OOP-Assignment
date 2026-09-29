@@ -3,7 +3,7 @@
 using namespace std;
 void menu(){
     cout<<"Please Enter a Filter Number :"<<endl;
-    cout<<"1.Greyscale"<<endl;
+    cout<<"1.Grayscale"<<endl;
     cout<<"2.Black & White"<<endl;
     cout<<"3.Invert"<<endl;
     cout<<"4.Frame"<<endl;
@@ -13,7 +13,7 @@ void menu(){
     cout<<"8.Resize"<<endl;
     cout<<"___________________________________________________________"<<endl;
 }
-void greyscale(Image &photo){
+void grayscale(Image &photo){
     for(int i = 0;i < image.width; ++i){
         for(int j = 0;j < image.height; ++j){
             unsigned int avg = 0;
@@ -160,7 +160,7 @@ int main(){
     if(1 <= number && number <= 8){
         switch (number){
             case 1:
-                greyscale(photo);
+                grayscale(photo);
                 photo.saveImage(fileName);
             break;
             case 2:  

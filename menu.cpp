@@ -37,6 +37,106 @@ void invert(Image &photo){
         }
     }
 }
+void GetRGB(int Color, int& R, int& G, int& B)
+{
+    if (Color == 1){R = 255; G = 255; B = 255;}
+    else if (Color == 2){R = 0; G = 0; B = 0;}
+    else if (Color == 3){R = 255; G = 0; B = 0;}
+    else if (Color == 4){R = 0; G = 255; B = 0;}
+    else if (Color == 5){R = 0; G = 0; B = 255;}
+}
+
+void ChooseColor()
+{
+    cout << "1. White" << endl;
+    cout << "2. Black" << endl;
+    cout << "3. Red" << endl;
+    cout << "4. Green" << endl;
+    cout << "5. Blue" << endl;
+}
+
+void frame(Image &photo)
+{
+    int FrameType;
+
+    cout << "Choose frame type :" << endl;
+    cout << "1. simple" << endl;
+    cout << "2. fancy" << endl;
+    cin >> FrameType;
+
+    int Color, OuterColor, InnerColor, Thickness, OuterThickness, InnerThickness;
+
+    if (FrameType == 1)
+    {
+        cout << "Choose frame color" << endl;
+        ChooseColor();
+        cin >> Color;
+        
+        cout << "Enter frame Thickness :" << endl;
+        cin >> Thickness;
+    }
+    else
+    {
+        cout << "Choose Outer frame color" << endl;
+        ChooseColor();
+        cin >> OuterColor;
+
+        cout << "Enter Outer frame Thickness :" << endl;
+        cin >> OuterThickness;
+
+        cout << "Choose Inner frame color" << endl;
+        ChooseColor();
+        cin >> InnerColor;
+    
+        cout << "Enter Inner frame Thickness :" << endl;
+        cin >> InnerThickness;
+    }
+
+    int R, G, B, OuterR, OuterG, OuterB, InnerR, InnerG, InnerB;
+
+    if (FrameType == 1)
+    {
+        GetRGB(Color, R, G, B);
+
+        for (int y = 0; y < photo.height; y++)
+        {
+            for (int x = 0; x < photo.width; x++)
+            {
+                if(y < Thickness || y >= photo.height - Thickness ||
+                   x < Thickness || x >= photo.width - Thickness)
+                {
+                    photo(x, y, 0) = R;
+                    photo(x, y, 1) = G;
+                    photo(x, y, 2) = B;    
+                }   
+            }
+        }
+    }
+    else
+    {
+        GetRGB(OuterColor, OuterR, OuterG, OuterB);
+        GetRGB(InnerColor, InnerR, InnerG, InnerB);
+
+        for(int y = 0; y < photo.height; y++){
+            for(int x = 0; x < photo.width; x++){
+                if(y < OuterThickness || y >= photo.height - OuterThickness ||
+                   x < OuterThickness || x >= photo.width - OuterThickness)
+                {
+                    photo(x, y, 0) = OuterR;
+                    photo(x, y, 1) = OuterG;
+                    photo(x, y, 2) = OuterB;  
+                }  
+                else if (y < InnerThickness || y >= photo.height - InnerThickness ||
+                         x < InnerThickness || x >= photo.width - InnerThickness)
+                {
+                    photo(x, y, 0) = InnerR;
+                    photo(x, y, 1) = InnerG;
+                    photo(x, y, 2) = InnerB;
+                }
+            }
+        }
+    }
+}
 
 void light(Image &photo,int precentage){
     for (int i=0;i<photo.width;++i){
@@ -144,6 +244,34 @@ void rotate_filter(Image &photo,int angle) {
         cout<<"wrong angle of rotation"<<endl;
     }
 }
+void resize(Image &photo)
+{
+    int newWidth, newHeight;
+
+    cout << "Enter new Width: ";
+    cin >> newWidth;
+
+    cout << "Enter new Height: ";
+    cin >> newHeight;
+
+    Image newImage(newWidth, newHeight);
+
+    for (int y = 0; y < newHeight; y++)
+    {
+        for (int x = 0; x < newWidth; x++)
+        {
+            int oldX = x * photo.width / newWidth;
+            int oldY = y * photo.height / newHeight;
+
+            for (int color = 0; color < 3; color++)
+            {
+                newImage(x, y, color) = photo(oldX, oldY, color);
+            }
+        }
+    }
+
+    photo = newImage;
+}
 
 int main(){
     menu();
@@ -169,7 +297,8 @@ int main(){
                 photo.saveImage(fileName);
             break;
             case 4:
-
+                frame(photo);
+                photo.saveImage(fileName);
             break;
             case 5:
                 int flip_filter;
@@ -216,7 +345,8 @@ int main(){
                 }
             break;
             case 8:
-
+                resize(photo);
+                photo.saveImage(fileName);
             break;
         }
     }

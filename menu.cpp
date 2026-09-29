@@ -108,7 +108,7 @@ void blackandwhite_filter(Image &photo) {
 
 void rotate_filter(Image &photo) {
     int angle;
-    cout<<"enter the rotation angle"<<endl;
+    cout<<"enter the angle of rotation"<<endl;
     cin>>angle;
     if(angle==180) {
         Image new_image(photo.width,photo.height);
@@ -116,7 +116,7 @@ void rotate_filter(Image &photo) {
             for (int j=0;j<photo.height;j++) {
                 new_image(photo.width-1-i, photo.height-1-j, 0)=photo(i,j,0);
                 new_image(photo.width-1-i, photo.height-1-j, 1)=photo(i,j,1);
-                new_image(photo.width-1-i, photo.height-1-j, 2) = photo(i,j,2);
+                new_image(photo.width-1-i, photo.height-1-j, 2)=photo(i,j,2);
             }
         }
         photo=new_image; 
@@ -125,9 +125,9 @@ void rotate_filter(Image &photo) {
         Image new_image(photo.height,photo.width);
         for(int i=0;i<photo.width;i++) {
             for (int j = 0;j<photo.height;j++) {
-                new_image(photo.height-1-j, i, 0) = photo(i,j,0);
-                new_image(photo.height-1-j, i, 1) = photo(i,j,1);
-                new_image(photo.height-1-j, i, 2) = photo(i,j,2);
+                new_image(photo.height-1-j, i, 0)=photo(i,j,0);
+                new_image(photo.height-1-j, i, 1)=photo(i,j,1);
+                new_image(photo.height-1-j, i, 2)=photo(i,j,2);
             }
         }
         photo=new_image;
@@ -136,15 +136,15 @@ void rotate_filter(Image &photo) {
         Image new_image(photo.height,photo.width);
         for(int i=0;i<photo.width;i++) {
             for (int j=0;j<photo.height;j++) {
-                new_image(j, photo.width-1-i, 0) = photo(i,j,0);
-                new_image(j, photo.width-1-i, 1) = photo(i,j,1);
-                new_image(j, photo.width-1-i ,2) = photo(i,j,2);
+                new_image(j, photo.width-1-i, 0)=photo(i,j,0);
+                new_image(j, photo.width-1-i, 1)=photo(i,j,1);
+                new_image(j, photo.width-1-i ,2)=photo(i,j,2);
             }
         }
         photo=new_image;
     }
     else {
-        cout<<"Invalid angle!"<<endl;
+        cout<<"wrong angle of rotation"<<endl;
     }
 }
 

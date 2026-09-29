@@ -14,15 +14,15 @@ void menu(){
     cout<<"___________________________________________________________"<<endl;
 }
 void grayscale(Image &photo){
-    for(int i = 0;i < image.width; ++i){
-        for(int j = 0;j < image.height; ++j){
+    for(int i = 0;i < photo.width; ++i){
+        for(int j = 0;j < photo.height; ++j){
             unsigned int avg = 0;
             for(int k = 0;k < 3; ++k){
-                avg += image(i, j, k);
+                avg += photo(i, j, k);
             }
             avg /= 3;
             for (int k = 0;k < 3; ++k){
-                image(i,j,k)= avg;
+                photo(i,j,k)= avg;
             }
         }
     }

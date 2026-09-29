@@ -117,6 +117,8 @@ void frame(Image &photo)
         GetRGB(OuterColor, OuterR, OuterG, OuterB);
         GetRGB(InnerColor, InnerR, InnerG, InnerB);
 
+        int TotalThickness = OuterThickness + InnerThickness;
+
         for(int y = 0; y < photo.height; y++){
             for(int x = 0; x < photo.width; x++){
                 if(y < OuterThickness || y >= photo.height - OuterThickness ||
@@ -126,8 +128,8 @@ void frame(Image &photo)
                     photo(x, y, 1) = OuterG;
                     photo(x, y, 2) = OuterB;  
                 }  
-                else if (y < InnerThickness || y >= photo.height - InnerThickness ||
-                         x < InnerThickness || x >= photo.width - InnerThickness)
+                else if (y < TotalThickness || y >= photo.height - TotalThickness ||
+                         x < TotalThickness || x >= photo.width - TotalThickness)
                 {
                     photo(x, y, 0) = InnerR;
                     photo(x, y, 1) = InnerG;

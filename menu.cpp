@@ -13,7 +13,7 @@ void menu(){
     cout<<"8.Resize"<<endl;
     cout<<"___________________________________________________________"<<endl;
 }
-void Grayscale(Image &photo){
+void greyscale(Image &photo){
     for(int i = 0;i < image.width; ++i){
         for(int j = 0;j < image.height; ++j){
             unsigned int avg = 0;
@@ -160,7 +160,8 @@ int main(){
     if(1 <= number && number <= 8){
         switch (number){
             case 1:
-                
+                greyscale(photo);
+                photo.saveImage(fileName);
             break;
             case 2:  
                 blackandwhite_filter(photo);

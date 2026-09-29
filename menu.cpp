@@ -88,6 +88,12 @@ void frame(Image &photo)
     cout << "2. fancy" << endl;
     cin >> FrameType;
 
+     while (FrameType != 1 && FrameType != 2)
+     {
+       cout << "Invalid choice. Please enter 1 or 2:" << endl;
+       cin >> FrameType;
+     }
+
     int Color, OuterColor, InnerColor, Thickness, OuterThickness, InnerThickness;
 
     if (FrameType == 1)
@@ -95,9 +101,30 @@ void frame(Image &photo)
         cout << "Choose frame color" << endl;
         ChooseColor();
         cin >> Color;
+
+        while (Color < 1 || Color > 5)
+       {
+          cout << "Invalid color. Please choose a number from 1 to 5." << endl;
+          ChooseColor();
+          cin >> Color;
+       }
         
         cout << "Enter frame Thickness :" << endl;
         cin >> Thickness;
+
+        while (Thickness <= 0 || Thickness > photo.height / 2  || Thickness > photo.width / 2 )
+        {
+            cout << "invalid thickness" << endl;
+
+            if (Thickness <= 0)
+            cout << "Thickness must be greater than 0" << endl;
+
+            else 
+            cout << "Thickness cannot be greater than the image width or height" << endl;
+
+            cout <<"Enter Thickness again :" << endl;
+            cin >> Thickness;
+        }
     }
     else
     {
@@ -105,15 +132,55 @@ void frame(Image &photo)
         ChooseColor();
         cin >> OuterColor;
 
+        while (OuterColor < 1 || OuterColor > 5)
+       {
+         cout << "Invalid color. Please choose a number from 1 to 5." << endl;
+         ChooseColor();
+         cin >> OuterColor;
+       }
+
         cout << "Enter Outer frame Thickness :" << endl;
         cin >> OuterThickness;
+
+        while (OuterThickness <= 0 || OuterThickness > photo.width || OuterThickness > photo.height)
+        {
+         cout << "Invalid Outer Thickness!" << endl;
+
+         if (OuterThickness <= 0)
+         cout << "Outer Thickness must be greater than 0." << endl;
+         else
+         cout << "Outer Thickness cannot be greater than the image width or height." << endl;
+
+         cout << "Enter Outer Thickness again: ";
+         cin >> OuterThickness;
+       }
 
         cout << "Choose Inner frame color" << endl;
         ChooseColor();
         cin >> InnerColor;
+
+        while (InnerColor < 1 || InnerColor > 5)
+        {
+         cout << "Invalid color. Please choose a number from 1 to 5." << endl;
+         ChooseColor();
+         cin >> InnerColor;
+        }
     
         cout << "Enter Inner frame Thickness :" << endl;
         cin >> InnerThickness;
+
+        while (InnerThickness <= 0 || OuterThickness + InnerThickness > photo.width / 2 ||OuterThickness + InnerThickness > photo.height / 2)
+        {
+         cout << "Invalid Inner Thickness!" << endl;
+
+         if (InnerThickness <= 0)
+         cout << "Inner Thickness must be greater than 0." << endl;
+         else
+         cout << "Outer Thickness + Inner Thickness is too large for the image." << endl;
+
+         cout << "Enter Inner Thickness again: ";
+         cin >> InnerThickness;
+       }
     }
 
     int R, G, B, OuterR, OuterG, OuterB, InnerR, InnerG, InnerB;
@@ -306,6 +373,17 @@ void resize(Image &photo)
 
     cout << "Enter new Height: ";
     cin >> newHeight;
+
+    while (newWidth <= 0 || newHeight <= 0)
+    {
+      cout << "Invalid dimensions. Please enter positive values." << endl;
+
+      cout << "Enter new width: ";
+      cin >> newWidth;
+
+      cout << "Enter new height: ";
+      cin >> newHeight;
+    }   
 
     Image newImage(newWidth, newHeight);
 

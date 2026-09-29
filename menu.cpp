@@ -13,6 +13,20 @@ void menu(){
     cout<<"8.Resize"<<endl;
     cout<<"___________________________________________________________"<<endl;
 }
+void Grayscale(Image &photo){
+    for(int i = 0;i < image.width; ++i){
+        for(int j = 0;j < image.height; ++j){
+            unsigned int avg = 0;
+            for(int k = 0;k < 3; ++k){
+                avg += image(i, j, k);
+            }
+            avg /= 3;
+            for (int k = 0;k < 3; ++k){
+                image(i,j,k)= avg;
+            }
+        }
+    }
+}
 
 void invert(Image &photo){
     for (int i=0;i<photo.width;++i){
@@ -53,7 +67,27 @@ void dark(Image &photo,int precentage){
         }
     }
 }
+void vertical(Image &photo) {
+    for (int i = 0; i < photo.width; ++i) {
+        for (int j = 0; j < photo.height / 2; ++j) {
+            int new_j = photo.height - 1 - j;
+            for (int k = 0; k < 3; ++k) {
+                swap(photo(i, j, k), photo(i, new_j, k));
+            }
+        }
+    }
+}
 
+void horizontal(Image &photo) {
+    for (int i = 0; i < photo.width / 2; ++i) {
+        int new_i = photo.width - 1 - i;
+        for (int j = 0; j < photo.height; ++j) {
+            for (int k = 0; k < 3; ++k) {
+                swap(photo(new_i, j, k), photo(i, j, k));
+            }
+        }
+    }
+}
 void blackandwhite_filter(Image &photo) {
     for(int i=0;i<photo.width;i++) {
         for(int j=0;j<photo.height;j++) {
@@ -140,6 +174,21 @@ int main(){
 
             break;
             case 5:
+                int filter;
+                cout<<"Enter 1 for vertical flip And 0 for horizontal flip"<<endl;
+                cin>>filter;
+                while(filter !=0 && filter != 1){
+                    cout<<"Enter 1 for vertical flip And 0 for horizontal flip"<<endl;
+                    cin>>filter;
+                }
+                if(filter==0){
+                    horizontal(photo);
+                    photo.saveImage(fileName);
+                }
+                else if(filter==1){
+                    vertical(photo);
+                    photo.saveImage(fileName);
+                }
 
             break;
             case 6: 

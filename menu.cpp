@@ -106,10 +106,7 @@ void blackandwhite_filter(Image &photo) {
     }
 }
 
-void rotate_filter(Image &photo) {
-    int angle;
-    cout<<"enter the angle of rotation"<<endl;
-    cin>>angle;
+void rotate_filter(Image &photo,int angle) {
     if(angle==180) {
         Image new_image(photo.width,photo.height);
         for(int i=0;i<photo.width;i++) {
@@ -180,7 +177,7 @@ int main(){
                 cin>> flip_filter;
                 while(flip_filter != 0 && flip_filter != 1){
                     cout<<"Enter 1 for vertical flip And 0 for horizontal flip"<<endl;
-                    cin>>filter;
+                    cin>>flip_filter;
                 }
                 if(flip_filter == 0){
                     horizontal(photo);
@@ -193,7 +190,10 @@ int main(){
 
             break;
             case 6: 
-                rotate_filter(photo);
+                int angle;
+                cout<<"enter the angle of rotation"<<endl;
+                cin>>angle;
+                rotate_filter(photo, angle);
                 photo.saveImage(fileName);
             break;
             case 7:

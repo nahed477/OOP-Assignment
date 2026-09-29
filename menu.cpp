@@ -360,9 +360,6 @@ void rotate_filter(Image &photo,int angle) {
         }
         photo=new_image;
     }
-    else {
-        cout<<"wrong angle of rotation"<<endl;
-    }
 }
 void resize(Image &photo)
 {
@@ -501,11 +498,21 @@ int main(){
             case 6: 
 <<<<<<< HEAD
                {
-                 int angle;
-                cout<<"Enter The Angle of The Rotation "<<endl;
-                cin>>angle;
-                rotate_filter(photo, angle);
-                
+    case 6:
+{
+    int angle;
+
+    cout<<"Enter the rotation angle"<<endl;
+    cin>>angle;
+    if(angle==90 || angle==180 || angle==270) {
+        rotate_filter(photo,angle);
+        photo.saveImage(fileName);
+    }
+    else {
+        cout<<"Invalid angle"<<endl;
+    }
+    break;
+}
                }
             break;
             case 7:

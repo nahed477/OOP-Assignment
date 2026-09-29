@@ -175,18 +175,18 @@ int main(){
 
             break;
             case 5:
-                int filter;
+                int flip_filter;
                 cout<<"Enter 1 for vertical flip And 0 for horizontal flip"<<endl;
-                cin>>filter;
-                while(filter !=0 && filter != 1){
+                cin>> flip_filter;
+                while(flip_filter != 0 && flip_filter != 1){
                     cout<<"Enter 1 for vertical flip And 0 for horizontal flip"<<endl;
                     cin>>filter;
                 }
-                if(filter==0){
+                if(flip_filter == 0){
                     horizontal(photo);
                     photo.saveImage(fileName);
                 }
-                else if(filter==1){
+                else if(flip_filter == 1){
                     vertical(photo);
                     photo.saveImage(fileName);
                 }

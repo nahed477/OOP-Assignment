@@ -25,7 +25,14 @@ void menu(){
     cout<<"6.Rotate"<<endl;
     cout<<"7.Brightness"<<endl;
     cout<<"8.Resize"<<endl;
-    cout<<"9.Upload A New Photo"<<endl;
+    cout<<"9."<<endl;
+    cout<<"10."<<endl;
+    cout<<"11.Crop Image"<<endl;
+    cout<<"12."<<endl;
+    cout<<"13."<<endl;
+    cout<<"14."<<endl;
+    cout<<"15. "<<endl;
+    cout<<"16.Upload A New Photo"<<endl;
     cout<<"Enter 0 to Exit "<<endl;
 
     cout<<"___________________________________________________________"<<endl;
@@ -298,7 +305,29 @@ void resize(Image &photo)
 
     photo = newImage;
 }
+//***/ /***//*** //***//* **//* **
+void crop_image(Image &photo){
+    int widthstartingpoint,hieghtstartingpoint,newwidth,newheight;
+    cout<<"Please Enter Width Starting Point"<<endl;
+    cin>>widthstartingpoint;
+    cout<<"Please Enter Height Startting Point"<<endl;
+    cin>>hieghtstartingpoint;
+    cout<<"Please Enter New Width :"<<endl;
+    cin>>newwidth;
+    cout<<"Please Enter New Height :"<<endl;
+    cin>>newheight;
+   Image new_photo(newwidth,newheight);
+    for(int i=0;i<new_photo.width;i++){
+        for(int j=0;j<new_photo.height;j++){
+            for(int k=0;k<3;k++){
+             new_photo(i,j,k) =photo(widthstartingpoint+i,hieghtstartingpoint+j,k);
+            }
+        }
+    }
+    photo=new_photo;
 
+}
+//***/ /***//*** //***//* **//* **
 int main(){
      cout<<"Please Enter File Name With Extention : "<<endl; 
     string fileName;
@@ -318,7 +347,7 @@ int main(){
         cout<<"Exited Program ";
         break;   
     }
-    if(1 <= number && number <= 8){
+    if(1 <= number && number <= 15){
         switch (number){
             case 1:
                 grayscale(photo);
@@ -396,6 +425,27 @@ int main(){
                 resize(photo);
                 
             break;
+            case 9:
+
+            break;
+            case 10:
+
+            break;
+            case 11:
+            crop_image(photo);
+            break;
+            case 12:
+
+            break;
+            case 13:
+
+            break;
+            case 14:
+
+            break;
+            case 15:
+
+            break;
 
         }
         photo.saveImage(fileName);
@@ -403,7 +453,7 @@ int main(){
         cout<<"Editing Done Successfully!"<<endl;
         cout<<"___________________________________________"<<endl;
     }
-    else if(number == 9){
+    else if(number == 16){
         cout<<"Enter 1 To Save Current Image And Any Number to Discard It "<<endl;
         int answer;
         cin>>answer;

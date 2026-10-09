@@ -25,14 +25,15 @@ void menu(){
     cout<<"6.Rotate"<<endl;
     cout<<"7.Brightness"<<endl;
     cout<<"8.Resize"<<endl;
-    cout<<"9."<<endl;
+    cout<<"9.Merge Photos"<<endl;
     cout<<"10."<<endl;
     cout<<"11.Crop Image"<<endl;
     cout<<"12."<<endl;
     cout<<"13."<<endl;
     cout<<"14."<<endl;
-    cout<<"15. "<<endl;
-    cout<<"16.Upload A New Photo"<<endl;
+    cout<<"15.Purple "<<endl;
+    cout<<"16."<<endl;
+    cout<<"17.Upload A New Photo"
     cout<<"Enter 0 to Exit "<<endl;
 
     cout<<"___________________________________________________________"<<endl;
@@ -328,6 +329,90 @@ void crop_image(Image &photo){
 
 }
 //***/ /***//*** //***//* **//* **
+void purple_filter( Image &photo){
+    for(int i=0;i<photo.width;i++){
+        for(int j=0;j<photo.height;j++){
+            int red,green,blue;
+            red=photo(i,j,0);
+            green=photo(i,j,1);
+            blue=photo(i,j,2);
+            green =0;
+            int new_red=red * 1.2;
+            int new_blue=blue * 1.2;
+            if(new_red>255){new_red=255;}
+            if(new_blue>255){new_blue=255;}
+            photo(i,j,0)=new_red;
+            photo(i,j,1)=0;
+            photo(i,j,2)=new_blue;
+        }
+    }
+}
+//***/ /***//*** //***//* **//* **
+void merge(Image &photo){
+    string filename2;
+    cout<<"Please Enter Another File Name With Extention"<<endl;
+    cin>>filename2;
+    Image photo2(filename2);
+    if(photo.width == photo2.width && photo.height==photo2.height){
+        Image mergedphoto(photo.width,photo.height);
+        for(int i=0;i<photo.width;i++){
+            for(int j=0;j<photo.height;j++){
+                 for(int k=0;k<3;k++){
+                   mergedphoto(i,j,k)=(photo(i,j,k)+photo2(i,j,k))/2;
+                 }
+            }
+        }
+        mergedphoto.saveImage("merged.jpg");
+    }
+    else{
+        int option;
+        do{
+        cout<<"The Two Image Has Different Sizes, Please Choose:"<<endl;
+        cout<<"1.Resize to The Maximum Image and Merge"<<endl;
+        cout<<"2. Merge The Common Area"<<endl;
+        cin>>option;
+        }while(option != 1 && option!=2);
+        if(option == 1){
+           int max_width,max_height;
+           max_width=max(photo.width,photo2.width);
+           max_height=max(photo.height,photo2.height);
+           Image mergedphoto(max_width,max_height);
+              for(int i=0;i<mergedphoto.width;i++){
+              for(int j=0;j<mergedphoto.height;j++){
+                 for(int k=0;k<3;k++){
+                 if(i<photo.width && j<photo.height && i<photo2.width && j<photo2.height){
+                   mergedphoto(i,j,k)=(photo(i,j,k)+photo2(i,j,k))/2;
+                 }
+                 else if(i<photo.width && j<photo.height){
+                  mergedphoto(i,j,k)=photo(i,j,k);
+                 }
+                 else{
+                    mergedphoto(i,j,k)=photo2(i,j,k);
+                 }
+                 }
+            }
+        }
+          mergedphoto.saveImage("merged.jpg");
+        }
+        else if(option==2){
+            int min_width,min_height;
+            min_width=min(photo.width,photo2.width);
+            min_height=min(photo.height,photo2.height);
+            Image mergedphoto(min_width,min_height);
+              for(int i=0;i<mergedphoto.width;i++){
+              for(int j=0;j<mergedphoto.height;j++){
+                 for(int k=0;k<3;k++){
+                   mergedphoto(i,j,k)=(photo(i,j,k)+photo2(i,j,k))/2;
+                 }
+            }
+        }
+          mergedphoto.saveImage("merged.jpg");
+        }
+        
+    }
+  
+}
+//***/ /***//*** //***//* **//* **
 int main(){
      cout<<"Please Enter File Name With Extention : "<<endl; 
     string fileName;
@@ -426,7 +511,7 @@ int main(){
                 
             break;
             case 9:
-
+            merge(photo);  
             break;
             case 10:
 
@@ -444,6 +529,9 @@ int main(){
 
             break;
             case 15:
+         purple_filter(photo);
+            break;
+            case 16:
 
             break;
 

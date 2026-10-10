@@ -10,6 +10,7 @@
 
 
 #include<iostream>
+#include<cstdlib>
 #include"Image_Class.h"
 #include <utility>
 
@@ -26,14 +27,14 @@ void menu(){
     cout<<"7.Brightness"<<endl;
     cout<<"8.Resize"<<endl;
     cout<<"9.Merge Photos"<<endl;
-    cout<<"10."<<endl;
+    cout<<"10.Detect Image Edges"<<endl;
     cout<<"11.Crop Image"<<endl;
     cout<<"12."<<endl;
     cout<<"13."<<endl;
-    cout<<"14."<<endl;
+    cout<<"14.Old TV (Den Den Mushi)"<<endl;
     cout<<"15.Purple "<<endl;
     cout<<"16."<<endl;
-    cout<<"17.Upload A New Photo"
+    cout<<"17.Upload A New Photo"<<endl;
     cout<<"Enter 0 to Exit "<<endl;
 
     cout<<"___________________________________________________________"<<endl;
@@ -239,6 +240,28 @@ void blackandwhite_filter(Image &photo) {
     }
 }
 //***/ /***//*** //***//* **//* **
+void edge_detection_filter(Image &photo) {
+    blackandwhite_filter(photo);
+    Image new_image(photo.width,photo.height);
+    for(int i=0;i<photo.width;i++) {
+        for(int j=0;j<photo.height;j++) {
+            new_image(i,j,0)=255;
+            new_image(i,j,1)=255;
+            new_image(i,j,2)=255;
+        }
+    }
+    for(int i=0;i<photo.width-1;i++) {
+        for(int j=0;j<photo.height-1;j++) {
+            if(photo(i,j,0)!=photo(i+1,j,0) || photo(i,j,0)!=photo(i,j+1,0)) {
+                new_image(i,j,0)=0;
+                new_image(i,j,1)=0;
+                new_image(i,j,2)=0;
+            }
+        }
+    }
+    photo=new_image;
+}
+//***/ /***//*** //***//* **//* **
 void rotate_filter(Image &photo,int angle) {
     if(angle==180) {
         Image new_image(photo.width,photo.height);
@@ -358,7 +381,7 @@ void merge(Image &photo){
         for(int i=0;i<photo.width;i++){
             for(int j=0;j<photo.height;j++){
                  for(int k=0;k<3;k++){
-                   mergedphoto(i,j,k)=(photo(i,j,k)+photo2(i,j,k))/2;
+                    mergedphoto(i,j,k)=(photo(i,j,k)+photo2(i,j,k))/2;
                  }
             }
         }
@@ -373,15 +396,15 @@ void merge(Image &photo){
         cin>>option;
         }while(option != 1 && option!=2);
         if(option == 1){
-           int max_width,max_height;
-           max_width=max(photo.width,photo2.width);
-           max_height=max(photo.height,photo2.height);
-           Image mergedphoto(max_width,max_height);
+            int max_width,max_height;
+            max_width=max(photo.width,photo2.width);
+            max_height=max(photo.height,photo2.height);
+            Image mergedphoto(max_width,max_height);
               for(int i=0;i<mergedphoto.width;i++){
               for(int j=0;j<mergedphoto.height;j++){
                  for(int k=0;k<3;k++){
                  if(i<photo.width && j<photo.height && i<photo2.width && j<photo2.height){
-                   mergedphoto(i,j,k)=(photo(i,j,k)+photo2(i,j,k))/2;
+                    mergedphoto(i,j,k)=(photo(i,j,k)+photo2(i,j,k))/2;
                  }
                  else if(i<photo.width && j<photo.height){
                   mergedphoto(i,j,k)=photo(i,j,k);
@@ -402,7 +425,7 @@ void merge(Image &photo){
               for(int i=0;i<mergedphoto.width;i++){
               for(int j=0;j<mergedphoto.height;j++){
                  for(int k=0;k<3;k++){
-                   mergedphoto(i,j,k)=(photo(i,j,k)+photo2(i,j,k))/2;
+                    mergedphoto(i,j,k)=(photo(i,j,k)+photo2(i,j,k))/2;
                  }
             }
         }
@@ -411,6 +434,29 @@ void merge(Image &photo){
         
     }
   
+}
+//***/ /***//*** //***//* **//* **
+void tv_filter(Image &photo) {
+    for(int j=0;j<photo.height;j++) {
+        for(int i=0;i<photo.width;i++) {
+            int noise=(rand() % 41)-20;
+            for(int k=0;k<3;k++) {
+                int tv_photo=photo(i,j,k)+noise;
+                if(tv_photo>255) {
+                    tv_photo=255;
+                }
+                else if(tv_photo<0) {
+                    tv_photo=0;
+                }
+                photo(i,j,k)=tv_photo;
+            }
+            if(j % 4==0) {
+                photo(i,j,0)=photo(i,j,0)*0.7;
+                photo(i,j,1)=photo(i,j,1)*0.7;
+                photo(i,j,2)=photo(i,j,2)*0.7;
+            }
+        }
+    }
 }
 //***/ /***//*** //***//* **//* **
 int main(){
@@ -425,14 +471,14 @@ int main(){
       if(cin.fail()){
         cin.clear();
         cin.ignore(10000, '\n');
-        cout<<"Please Enter Number From 1 To 8";
+        cout<<"Please Enter Number From 1 To 16";
         continue;
     }
     if(number ==0 ){
         cout<<"Exited Program ";
         break;   
     }
-    if(1 <= number && number <= 15){
+    if(1 <= number && number <= 16){
         switch (number){
             case 1:
                 grayscale(photo);
@@ -511,13 +557,13 @@ int main(){
                 
             break;
             case 9:
-            merge(photo);  
+                merge(photo);  
             break;
             case 10:
-
+                edge_detection_filter(photo);
             break;
             case 11:
-            crop_image(photo);
+                crop_image(photo);
             break;
             case 12:
 
@@ -526,10 +572,10 @@ int main(){
 
             break;
             case 14:
-
+                tv_filter(photo);
             break;
             case 15:
-         purple_filter(photo);
+                purple_filter(photo);
             break;
             case 16:
 
@@ -541,7 +587,7 @@ int main(){
         cout<<"Editing Done Successfully!"<<endl;
         cout<<"___________________________________________"<<endl;
     }
-    else if(number == 16){
+    else if(number == 17 || number == 16){
         cout<<"Enter 1 To Save Current Image And Any Number to Discard It "<<endl;
         int answer;
         cin>>answer;
@@ -570,4 +616,5 @@ int main(){
     }
    }while(number != 0);
 
+   return 0;
 }

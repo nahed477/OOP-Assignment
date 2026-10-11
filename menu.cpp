@@ -13,6 +13,7 @@
 #include<cstdlib>
 #include"Image_Class.h"
 #include <utility>
+#include<algorithm>
 
 using namespace std;
 
@@ -137,7 +138,7 @@ void frame(Image &photo)
         cout << "Enter Outer frame Thickness :" << endl;
         cin >> OuterThickness;
 
-        while(OuterColor <= 0 || OuterColor > photo.height/2 || OuterColor > photo.width/2)
+        while(OuterThickness <= 0 || OuterThickness > photo.height/2 || OuterThickness > photo.width/2)
         {
             cout << "Invalid Outer thickness. Enter a valid thickness:"<<endl;
             cin >> OuterThickness;

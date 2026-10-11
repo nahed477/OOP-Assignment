@@ -29,11 +29,11 @@ void menu(){
     cout<<"9.Merge Photos"<<endl;
     cout<<"10.Detect Image Edges"<<endl;
     cout<<"11.Crop Image"<<endl;
-    cout<<"12."<<endl;
-    cout<<"13."<<endl;
+    cout<<"12.Blur"<<endl;
+    cout<<"13.Sunlight"<<endl;
     cout<<"14.Old TV (Den Den Mushi)"<<endl;
     cout<<"15.Purple "<<endl;
-    cout<<"16."<<endl;
+    cout<<"16.Infrared"<<endl;
     cout<<"17.Upload A New Photo"<<endl;
     cout<<"Enter 0 to Exit "<<endl;
 
@@ -459,6 +459,90 @@ void tv_filter(Image &photo) {
     }
 }
 //***/ /***//*** //***//* **//* **
+void Sunlight(Image &photo){
+for(int i=0; i<photo.width; i++){
+    for(int j=0; j<photo.height; j++){
+
+        unsigned int R = photo(i, j, 0); 
+        unsigned int G = photo(i, j, 1); 
+        unsigned int B = photo(i, j, 2); 
+
+        int brightness = (R + G + B)/3;
+
+        int newR = R + 55;
+        int newG = G + 30;
+        int newB = B - 25;
+
+        if(brightness < 80){
+            newR = R + 60;
+            newG = G + 35;
+            newB = B + 10;
+        }
+
+        if(newR > 255){newR = 255;}
+        if(newG > 255){newG = 255;}
+        if(newB > 255){newB = 255;}
+        if(newB < 0){newB = 0;}
+
+        photo(i, j, 0) = newR;
+        photo(i, j, 1) = newG;
+        photo(i, j, 2) = newB;
+     
+    }
+}
+}
+//***/ /***//*** //***//* **//* **
+void Blur(Image &photo,int raduis){
+    if (raduis < 1) 
+    raduis = 1;
+
+    Image temp(photo.width,photo.height);
+    int box_size = 2 * raduis + 1;
+
+    for(int i = 0; i < photo.width; i++){
+        for(int j = 0; j < photo.height; j++){
+            for(int c = 0;c < 3; c++){
+                unsigned int sum = 0;
+                for(int x = -raduis; x <= raduis; x++){
+                    int valid_x = clamp(i + x, 0, photo.width-1);
+                    sum += photo(valid_x, j, c);
+                }
+                temp(i, j, c) = sum / box_size;
+            }
+        }
+    }
+    for(int i = 0; i < photo.width; i++){
+        for(int j = 0; j < photo.height; j++){
+            for(int c = 0; c < 3; c++){
+                unsigned int sum = 0;
+                for(int y = -raduis; y <= raduis; y++){
+                    int valid_y = clamp(j + y, 0, photo.height - 1);
+                    sum += temp(i, valid_y, c);
+                }
+                photo(i, j, c) = sum / box_size;
+            }
+        }
+    }
+}
+//***/ /***//*** //***//* **//* **
+void Infrared(Image &photo){
+    for(int i = 0; i < photo.width; i++){
+        for(int j = 0; j < photo.height; j++){
+
+            unsigned int R = photo(i, j, 0);
+            unsigned int G = photo(i, j, 1);
+            unsigned int B = photo(i, j, 2);
+
+            int brightness = (R + G + B) / 3;
+
+            photo(i, j, 0) = 255;
+            photo(i, j, 1) = brightness;
+            photo(i, j, 2) = brightness;
+            
+        }
+    }
+}
+//***/ /***//*** //***//* **//* **
 int main(){
      cout<<"Please Enter File Name With Extention : "<<endl; 
     string fileName;
@@ -566,10 +650,23 @@ int main(){
                 crop_image(photo);
             break;
             case 12:
+                int blur_level;
+
+                cout << "Enter Blur Strength: ";
+                cin >> blur_level;
+
+                while (blur_level < 1)
+                {
+                 cout << "The number is invalid. Enter another one: ";
+                 cin >> blur_level;
+                }
+
+                Blur(photo, blur_level);
+                
 
             break;
             case 13:
-
+                Sunlight(photo);
             break;
             case 14:
                 tv_filter(photo);
@@ -578,6 +675,7 @@ int main(){
                 purple_filter(photo);
             break;
             case 16:
+                Infrared(photo);
 
             break;
 

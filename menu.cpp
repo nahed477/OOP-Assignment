@@ -91,6 +91,12 @@ void frame(Image &photo)
     cout << "2. fancy" << endl;
     cin >> FrameType;
 
+    while(FrameType != 1 && FrameType != 2)
+    {
+       cout << "Invalid frame tye. Enter 1 or 2:"<<endl;
+       cin >> FrameType;
+    }
+
     int Color, OuterColor, InnerColor, Thickness, OuterThickness, InnerThickness;
 
     if (FrameType == 1)
@@ -98,9 +104,22 @@ void frame(Image &photo)
         cout << "Choose frame color" << endl;
         ChooseColor();
         cin >> Color;
+
+        while(Color < 1 || Color > 5)
+        {
+            cout<<"Invalid color. Enter a number from 1 to 5"<<endl;
+            ChooseColor();
+            cin >> Color;
+        }
         
         cout << "Enter frame Thickness :" << endl;
         cin >> Thickness;
+
+        while(Thickness <= 0 || Thickness > photo.height/2 || Thickness > photo.width/2)
+        {
+            cout << "Invalid thickness. Enter a valid thickness:"<<endl;
+            cin >> Thickness;
+        }
     }
     else
     {
@@ -108,15 +127,42 @@ void frame(Image &photo)
         ChooseColor();
         cin >> OuterColor;
 
+        while(OuterColor < 1 || OuterColor > 5)
+        {
+            cout<<"Invalid color. Enter a number from 1 to 5"<<endl;
+            ChooseColor();
+            cin >> OuterColor;
+        }
+
         cout << "Enter Outer frame Thickness :" << endl;
         cin >> OuterThickness;
+
+        while(OuterColor <= 0 || OuterColor > photo.height/2 || OuterColor > photo.width/2)
+        {
+            cout << "Invalid Outer thickness. Enter a valid thickness:"<<endl;
+            cin >> OuterThickness;
+        }
 
         cout << "Choose Inner frame color" << endl;
         ChooseColor();
         cin >> InnerColor;
+
+        while(InnerColor < 1 || InnerColor > 5)
+        {
+            cout<<"Invalid color. Enter a number from 1 to 5"<<endl;
+            ChooseColor();
+            cin >> InnerColor;
+        }
     
         cout << "Enter Inner frame Thickness :" << endl;
         cin >> InnerThickness;
+
+        while(InnerThickness <= 0 || 
+              OuterThickness + InnerThickness > photo.height/2 || OuterThickness + InnerThickness > photo.width/2)
+        {
+            cout << "Invalid Inner thickness. Enter a valid thickness:"<<endl;
+            cin >> InnerThickness;
+        }
     }
 
     int R, G, B, OuterR, OuterG, OuterB, InnerR, InnerG, InnerB;
@@ -311,6 +357,16 @@ void resize(Image &photo)
     cout << "Enter new Height: ";
     cin >> newHeight;
 
+    while (newWidth <= 0 || newHeight <= 0)
+    {
+      cout << "Invalid dimensions. pease enter positive values."<<endl;
+
+      cout << "Enter new Width: ";
+      cin >> newWidth;
+
+      cout << "Enter new Height: ";
+      cin >> newHeight;
+    }
     Image newImage(newWidth, newHeight);
 
     for (int y = 0; y < newHeight; y++)
@@ -463,9 +519,9 @@ void Sunlight(Image &photo){
 for(int i=0; i<photo.width; i++){
     for(int j=0; j<photo.height; j++){
 
-        unsigned int R = photo(i, j, 0); 
-        unsigned int G = photo(i, j, 1); 
-        unsigned int B = photo(i, j, 2); 
+        int R = photo(i, j, 0); 
+        int G = photo(i, j, 1); 
+        int B = photo(i, j, 2); 
 
         int brightness = (R + G + B)/3;
 
@@ -685,7 +741,7 @@ int main(){
         cout<<"Editing Done Successfully!"<<endl;
         cout<<"___________________________________________"<<endl;
     }
-    else if(number == 17 || number == 16){
+    else if(number == 17){
         cout<<"Enter 1 To Save Current Image And Any Number to Discard It "<<endl;
         int answer;
         cin>>answer;

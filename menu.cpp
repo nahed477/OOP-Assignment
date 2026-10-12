@@ -2,11 +2,15 @@
 //    ID:20250466       Filters:Grayscale & Flip Filters
 //2. Maya Hossam Abdelaziz Mahmoud 
 //    ID:20250528      Filters: Black and White & Rotate Filters
+// Section : Sunday From 08:00 To 09:30 (S25,S26)  Lab 5
 //3. Nahed Adel Abd Elfadeel Ahmed 
 //    ID:20250698     Filters:Invert & Darken/Lighten Filters & Menu
+// Section : Sunday From 09:30 To 11:00 (S13,S14) Library Lab
 //4. Yassmin Sherif Abd Elhafeez Elsayed
 //    ID:20250730     Filters: Frame & Resize Filters
-// Section : Monday From 09:30 To 11:00 (S31,S32)
+// Section : Sunday From 09:30 To 11:00 (S29,S30) Lab 5
+// Under The Subervision Of Dr.Mohammad El-Ramly 
+// 12 October 2026
 
 
 #include<iostream>
@@ -397,6 +401,12 @@ void crop_image(Image &photo){
     cin>>newwidth;
     cout<<"Please Enter New Height :"<<endl;
     cin>>newheight;
+ if(widthstartingpoint<0 || hieghtstartingpoint <0 ||
+  widthstartingpoint +newwidth > photo.width || hieghtstartingpoint + newheight >photo.height
+|| newwidth <=0|| newheight <=0){
+    cout<<"Invalid Dimensions, Please Try Again"<<endl;
+    return;
+  }
    Image new_photo(newwidth,newheight);
     for(int i=0;i<new_photo.width;i++){
         for(int j=0;j<new_photo.height;j++){
@@ -599,12 +609,17 @@ void Infrared(Image &photo){
         }
     }
 }
+
 //***/ /***//*** //***//* **//* **
+
 int main(){
      cout<<"Please Enter File Name With Extention : "<<endl; 
     string fileName;
     cin>>fileName;
     Image photo (fileName);
+    string resultname;
+    cout<<"Please Enter File Name To save The Final Photo In "<<endl;
+    cin>>resultname;
     int number;
    do{
      menu();
@@ -612,7 +627,8 @@ int main(){
       if(cin.fail()){
         cin.clear();
         cin.ignore(10000, '\n');
-        cout<<"Please Enter Number From 1 To 16";
+        cout<<"Please Enter Number From 1 To 16"<<endl;
+        number = -1;
         continue;
     }
     if(number ==0 ){
@@ -737,7 +753,7 @@ int main(){
             break;
 
         }
-        photo.saveImage(fileName);
+        photo.saveImage(resultname+".jpg");
          cout<<"__________________________________________"<<endl;
         cout<<"Editing Done Successfully!"<<endl;
         cout<<"___________________________________________"<<endl;
@@ -747,7 +763,7 @@ int main(){
         int answer;
         cin>>answer;
         if(answer == 1 ){
-            photo.saveImage(fileName);
+            photo.saveImage(resultname+".jpg");
             cout<<"__________________________________________"<<endl;
             cout<<"Photo Saved Successfully"<<endl;
             cout<<"__________________________________________"<<endl;
@@ -762,8 +778,11 @@ int main(){
             cin>>newfile;
             photo = Image(newfile);
             fileName = newfile;
+            cout<<"Please Enter New File Name To Save The Photo In"<<endl;
+            cin>>resultname;
             cout<<"Photo Uploded Successfully"<<endl;
             cout<<"__________________________________________"<<endl;
+
 
     }
     else{

@@ -1,17 +1,29 @@
-// 1. Farah Amr Gaber Elsayed  
-//    ID:20250466       Filters:Grayscale & Flip Filters
-//2. Maya Hossam Abdelaziz Mahmoud 
-//    ID:20250528      Filters: Black and White & Rotate Filters
-// Section : Sunday From 08:00 To 09:30 (S25,S26)  Lab 5
-//3. Nahed Adel Abd Elfadeel Ahmed 
-//    ID:20250698     Filters:Invert & Darken/Lighten Filters & Menu
-// Section : Sunday From 09:30 To 11:00 (S13,S14) Library Lab
-//4. Yassmin Sherif Abd Elhafeez Elsayed
-//    ID:20250730     Filters: Frame & Resize Filters
-// Section : Sunday From 09:30 To 11:00 (S29,S30) Lab 5
-// Under The Subervision Of Dr.Mohammad El-Ramly 
-// 12 October 2026
+/*
+Course: CS213 - Object Oriented Programming (Fall 2026)
+Assignment : Assignment 1- Part 2 (Hero Level - 16 Filters)
 
+ 1. Farah Amr Gaber Elsayed  
+    ID:20250466 
+    Filters:1 (Grayscale) &  5 (Flip) & 9 (Merge) & 13 (Sunlight)
+2. Maya Hossam Abdelaziz Mahmoud 
+    ID:20250528  
+    Filters: 2 (Black and White) & 6 (Rotate Filters) & 10 (Edge Detection) & 14 (Old TV)
+    Section : Sunday From 08:00 To 09:30 (S25,S26)  Lab 5
+3. Nahed Adel Abd Elfadeel Ahmed 
+    ID:20250698 
+    Filters: 3 (Invert) & 7 (Brightness) & 11 (Crop) & 15 (Purple) & Menu
+    Section : Sunday From 09:30 To 11:00 (S13,S14) Library Lab
+4. Yassmin Sherif Abd Elhafeez Elsayed
+    ID:20250730 
+    Filters: 4 (Frame) & 8 (Resize) & 12 (Blur) & 16 (Infrared)
+    Section : Sunday From 09:30 To 11:00 (S29,S30) Lab 5
+ Under The Subervision Of Dr.Mohammad El-Ramly 
+ 12 October 2026
+ Links:
+ - GitHub Repository: 
+ - Google Doc: https://docs.google.com/document/d/1IRVE5w8VHtgPy0mgzXXqspNFKY-zoNDjZD4nxO69pNA/edit?usp=sharing
+ - Video Demo: https://drive.google.com/file/d/1CUOf6ffP3tHJYl7JyujlJci-bmRsK7rO/view?usp=s
+*/
 
 #include<iostream>
 #include<cstdlib>
